@@ -71,20 +71,33 @@ fetchGenres().then(data => {
     let genresArray = data.genres
     console.log(genresArray)
     randomGenre = genresArray[Math.floor(Math.random() * genresArray.length)]
-    console.log(randomGenre)
 
     fetchMoviesFromGenre(randomGenre.id).then(data => {
         console.log(data)
         let randomPage = Math.floor(Math.random() * data[0])
-        console.log("Page: " + randomPage)
 
-        //TODO
         fetchRandomMovie(randomGenre.id, randomPage).then(data => {
             console.log(data)
             moviesArray = data.results
             randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
             console.log(randomMovie)
-            setMovieElements(randomMovie.original_title, randomMovie.release_date, randomMovie.genre_ids,randomMovie.overview,randomMovie.poster_path)
+
+            let movieYear = randomMovie.release_date.split("-")[0]
+
+            let genreNames = ""
+            randomMovie.genre_ids.forEach(genreId => {
+                genresArray.forEach(genre => {
+                    if (genre.id === genreId){
+                        if(genreNames.length === 0){
+                            genreNames += genre.name
+                        }else{
+                            genreNames += " | " + genre.name
+                        }
+                    }
+                });
+            });
+
+            setMovieElements(randomMovie.original_title, movieYear, genreNames,randomMovie.overview,randomMovie.poster_path)
         })
     })
 })
