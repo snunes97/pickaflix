@@ -1,0 +1,54 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #246bad;
+}
+
+#filters-panel {
+  background-color: #ffffff;
+  margin: 0 auto 50px auto;
+}
+
+#pick-panel {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 30% 60% 10%;
+  box-shadow: 5px 5px 10px #000000;
+  width: 65vw;
+  height: 70vh;
+  margin: auto;
+  background-color: #6e6e6e;
+}
+
+#poster-img {
+  grid-column: 1/span 1;
+  grid-row: 1/span 3;
+  height: 70vh;
+  width: 100%;
+}
+
+#title-div {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: left;
+  background-color: #fff;
+}
+
+#overview-div {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#options-div {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+#pick-panel p {
+  margin: 20px;
+}
+
+/*# sourceMappingURL=master.css.map */
