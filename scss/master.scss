@@ -21,6 +21,29 @@ $imageWidth: 455px;
 #filters-panel{
     background-color: #ffffff;
     margin: 0 auto 50px auto;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 15% 75%;
+}
+
+#filters-labels{
+    text-align: center;
+}
+
+#filters-options{
+
+}
+
+#genre-filters-list{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: left;
+    column-gap: 50px;
+    row-gap: 10px;
+    li{
+        display: inline-block;
+        text-decoration: none;
+    }
 }
 
 #pick-panel{
@@ -66,4 +89,39 @@ $imageWidth: 455px;
 
 #title-div, #overview-div, #options-div{
     padding: 20px;
+}
+
+#findMovieBtn{
+    display: block;
+    width: 140px;
+    margin: 0 auto 50px auto;
+}
+
+.custom-btn{
+    padding: 20px 20px 20px 20px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+}
+
+.custom-btn:visited{
+    color: #ffffff;
+}
+
+.positive-btn{
+    background-color: forestgreen;
+    color: #ffffff;
+    transition: box-shadow 0.2s ease-in-out;
+    border-right: 2px solid darkgreen;
+    border-bottom: 2px solid darkgreen;
+}
+
+.positive-btn:hover{
+    cursor: pointer;
+    box-shadow: 0 0 7px lawngreen;
+}
+
+.positive-btn:active{
+    box-shadow: 0 0 17px lawngreen;
 }

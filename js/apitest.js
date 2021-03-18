@@ -5,20 +5,11 @@ const imageBaseUrl = 'https://image.tmdb.org/t/p/'
 const imageSizeOriginal = 'original/'
 const imageSizeW500 = 'w500/'
 
-class Movie {
-    constructor(name, poster) {
-        this.name = name;
-        this.poster = poster;
-    }
-}
-
 async function fetchGenres(){
-
     let url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + apiKey + '&language=en-US';
     try {
         let res = await fetch(url);
-        let data = await res.json();
-        return data
+        return await res.json();
     } catch (error) {
         console.log(error);
     }
@@ -41,8 +32,7 @@ async function fetchRandomMovie(genreId,page){
     let url = 'http://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&page=' + page + '&with_genres=' + genreId;
     try {
         let res = await fetch(url);
-        let data = await res.json();
-        return data
+        return await res.json();
     } catch (error) {
         console.log(error);
     }
@@ -67,51 +57,45 @@ async function setMovieElements(title,year,genre,overview,posterUrl){
     movieOverview.textContent = overview
 }
 
-fetchGenres().then(data => {
-    let genresArray = data.genres
-    console.log(genresArray)
-    randomGenre = genresArray[Math.floor(Math.random() * genresArray.length)]
+async function pickMovie(){
 
-    fetchMoviesFromGenre(randomGenre.id).then(data => {
-        console.log(data)
-        let randomPage = Math.floor(Math.random() * data[0])
+    fetchGenres().then(data => {
+        let genresArray = data.genres
+        randomGenre = genresArray[Math.floor(Math.random() * genresArray.length)]
 
-        fetchRandomMovie(randomGenre.id, randomPage).then(data => {
-            console.log(data)
-            moviesArray = data.results
-            randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
-            console.log(randomMovie)
+        fetchMoviesFromGenre(randomGenre.id).then(data => {
+            let randomPage = Math.floor(Math.random() * data[0])
 
-            let movieYear = randomMovie.release_date.split("-")[0]
+            fetchRandomMovie(randomGenre.id, randomPage).then(data => {
+                moviesArray = data.results
+                randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
+                console.log(randomMovie)
 
-            let genreNames = ""
-            randomMovie.genre_ids.forEach(genreId => {
-                genresArray.forEach(genre => {
-                    if (genre.id === genreId){
-                        if(genreNames.length === 0){
-                            genreNames += genre.name
-                        }else{
-                            genreNames += " | " + genre.name
+                let movieYear = randomMovie.release_date.split("-")[0]
+
+                let genreNames = ""
+                randomMovie.genre_ids.forEach(genreId => {
+                    genresArray.forEach(genre => {
+                        if (genre.id === genreId){
+                            if(genreNames.length === 0){
+                                genreNames += genre.name
+                            }else{
+                                genreNames += " | " + genre.name
+                            }
                         }
-                    }
+                    });
                 });
-            });
-
-            setMovieElements(randomMovie.original_title, movieYear, genreNames,randomMovie.overview,randomMovie.poster_path)
+                setMovieElements(randomMovie.original_title, movieYear, genreNames,randomMovie.overview,randomMovie.poster_path)
+            })
         })
     })
-})
-
-
-
-// TEST STUFF
+}
 
 async function fetchMovie(movieId) {
     let url = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=24c182c1ae2274877815b20c1c384c68';
     try {
         let res = await fetch(url);
         let movie = await res.json();
-        // console.log(new Movie(movie.original_title, movie.poster_path))
 
         var pNode = document.createElement("p");
         var textNode = document.createTextNode(movie.original_title);
@@ -129,4 +113,31 @@ async function fetchMovie(movieId) {
     }
 }
 
+async function setGenreFilters(){
+    fetchGenres().then(data =>{
+        genresListElement = document.getElementById('genre-filters-list')
+
+        data.genres.forEach(genre => {
+            genreLi = document.createElement('li')
+
+            genreLabel = document.createElement('label')
+            genreLabel.htmlFor = ''
+            genreLabel.innerText = genre.name
+
+            genreInput = document.createElement('input')
+            genreInput.type = 'checkbox'
+            genreInput.name = 'g' + genre.name
+            genreInput.id = 'g' + genre.name
+            genreInput.checked = true
+
+            genreLi.appendChild(genreInput)
+            genreLi.appendChild(genreLabel)
+
+            genresListElement.appendChild(genreLi)
+        })
+    })
+}
+
+setGenreFilters();
+pickMovie();
 //fetchMovie(76341)
