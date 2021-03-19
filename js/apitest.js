@@ -1,5 +1,3 @@
-console.log("Script loaded!")
-
 const apiKey = '24c182c1ae2274877815b20c1c384c68'
 const imageBaseUrl = 'https://image.tmdb.org/t/p/'
 const imageSizeOriginal = 'original/'
@@ -28,7 +26,6 @@ async function fetchMoviesFromGenre(genreId){
 }
 
 async function fetchRandomMovie(genreId,page){
-
     let url = 'http://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&page=' + page + '&with_genres=' + genreId;
     try {
         let res = await fetch(url);
@@ -60,22 +57,24 @@ async function setMovieElements(title,year,genre,overview,posterUrl){
 async function pickMovie(){
 
     fetchGenres().then(data => {
-        let genresArray = data.genres
-        randomGenre = genresArray[Math.floor(Math.random() * genresArray.length)]
+        let allGenres = data.genres
+        let genres = getGenreFilters()
 
-        fetchMoviesFromGenre(randomGenre.id).then(data => {
+        if(!genres.length > 0){return false}
+
+        let randomGenre = genres[Math.floor(Math.random() * genres.length)]
+
+        fetchMoviesFromGenre(randomGenre).then(data => {
             let randomPage = Math.floor(Math.random() * data[0])
-
-            fetchRandomMovie(randomGenre.id, randomPage).then(data => {
-                moviesArray = data.results
-                randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
-                console.log(randomMovie)
+            fetchRandomMovie(randomGenre, randomPage).then(data => {
+                let moviesArray = data.results
+                let randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
 
                 let movieYear = randomMovie.release_date.split("-")[0]
 
                 let genreNames = ""
                 randomMovie.genre_ids.forEach(genreId => {
-                    genresArray.forEach(genre => {
+                    allGenres.forEach(genre => {
                         if (genre.id === genreId){
                             if(genreNames.length === 0){
                                 genreNames += genre.name
@@ -117,6 +116,7 @@ async function setGenreFilters(){
     fetchGenres().then(data =>{
         genresListElement = document.getElementById('genre-filters-list')
 
+        let gId = 1
         data.genres.forEach(genre => {
             genreLi = document.createElement('li')
 
@@ -127,7 +127,9 @@ async function setGenreFilters(){
             genreInput = document.createElement('input')
             genreInput.type = 'checkbox'
             genreInput.name = 'g' + genre.name
-            genreInput.id = 'g' + genre.name
+            genreInput.id = 'g' + gId
+            gId++
+            genreInput.value = genre.id
             genreInput.checked = true
 
             genreLi.appendChild(genreInput)
@@ -138,6 +140,19 @@ async function setGenreFilters(){
     })
 }
 
+function getGenreFilters(){
+    let checkedGenres = []
+    let genreCount = document.getElementById("genre-filters-list").childElementCount;
+
+    for (i = 1; i <= genreCount; i++) {
+        genre = document.getElementById('g' + i)
+        if(genre.checked){
+            checkedGenres.push(genre.value)
+        }
+    }
+    return checkedGenres
+}
+
 setGenreFilters();
-pickMovie();
+//pickMovie();
 //fetchMovie(76341)
