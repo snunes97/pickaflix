@@ -26,12 +26,8 @@ $imageWidth: 455px;
     grid-template-columns: 15% 75%;
 }
 
-#filters-labels{
+.filters-labels{
     text-align: center;
-}
-
-#filters-options{
-
 }
 
 #genre-filters-list{
@@ -124,4 +120,23 @@ $imageWidth: 455px;
 
 .positive-btn:active{
     box-shadow: 0 0 17px lawngreen;
+}
+
+#movie-rating{
+    background-color: #ffffff;
+    display: inline;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.title-details{
+    margin: 0;
+}
+
+@media only screen and (max-width: 1500px) {
+    #title-div{
+        #movie-title {
+            font-size: 1.5em;
+        }
+    }
 }

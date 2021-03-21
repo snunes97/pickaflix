@@ -26,7 +26,7 @@ async function fetchMoviesFromGenre(genreId){
 }
 
 async function fetchRandomMovie(genreId,page){
-    let url = 'http://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&page=' + page + '&with_genres=' + genreId;
+    let url = 'http://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=en-US&page=' + page + '&include_adult=false&with_genres=' + genreId;
     try {
         let res = await fetch(url);
         return await res.json();
@@ -35,7 +35,7 @@ async function fetchRandomMovie(genreId,page){
     }
 }
 
-async function setMovieElements(title,year,genre,overview,posterUrl){
+async function setMovieElements(title,year,genre,overview,posterUrl,lang,rating,votes){
     var pNode = document.createElement("p");
     var textNode = document.createTextNode(name);
     pNode.appendChild(textNode);
@@ -44,6 +44,8 @@ async function setMovieElements(title,year,genre,overview,posterUrl){
     let movieTitle = document.getElementById('movie-title')
     let movieYear = document.getElementById('movie-year')
     let movieGenre = document.getElementById('movie-genre')
+    let movieLanguage = document.getElementById('movie-language')
+    let movieRating = document.getElementById('movie-rating')
     let movieOverview = document.getElementById('overview')
 
     posterImg.src = imageBaseUrl + imageSizeW500 + posterUrl
@@ -51,6 +53,8 @@ async function setMovieElements(title,year,genre,overview,posterUrl){
     movieTitle.textContent = title
     movieYear.textContent = year
     movieGenre.textContent = genre
+    movieLanguage.textContent = "Language: " + lang.toUpperCase()
+    movieRating.textContent = "Avg. Rating: " + rating + " (" + votes + " votes)"
     movieOverview.textContent = overview
 }
 
@@ -69,7 +73,7 @@ async function pickMovie(){
             fetchRandomMovie(randomGenre, randomPage).then(data => {
                 let moviesArray = data.results
                 let randomMovie = moviesArray[Math.floor(Math.random() * moviesArray.length)]
-
+                console.log(randomMovie)
                 let movieYear = randomMovie.release_date.split("-")[0]
 
                 let genreNames = ""
@@ -84,32 +88,10 @@ async function pickMovie(){
                         }
                     });
                 });
-                setMovieElements(randomMovie.original_title, movieYear, genreNames,randomMovie.overview,randomMovie.poster_path)
+                setMovieElements(randomMovie.title, movieYear, genreNames,randomMovie.overview,randomMovie.poster_path,randomMovie.original_language,randomMovie.vote_average,randomMovie.vote_count)
             })
         })
     })
-}
-
-async function fetchMovie(movieId) {
-    let url = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=24c182c1ae2274877815b20c1c384c68';
-    try {
-        let res = await fetch(url);
-        let movie = await res.json();
-
-        var pNode = document.createElement("p");
-        var textNode = document.createTextNode(movie.original_title);
-        pNode.appendChild(textNode);
-
-        var imgNode = document.createElement("img");
-        imgNode.src = imageBaseUrl + imageSizeW500 + movie.poster_path
-
-        var element = document.getElementById("content");
-        element.appendChild(pNode);
-        element.appendChild(imgNode);
-
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 async function setGenreFilters(){
