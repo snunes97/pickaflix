@@ -54,7 +54,25 @@ async function setMovieElements(title,year,genre,overview,posterUrl,lang,rating,
     movieYear.textContent = year
     movieGenre.textContent = genre
     movieLanguage.textContent = "Language: " + lang.toUpperCase()
+
     movieRating.textContent = "Avg. Rating: " + rating + " (" + votes + " votes)"
+
+    switch(true) {
+        case rating >= 7.0:
+            movieRating.style.backgroundColor = "#11d618"
+            console.log(1)
+            break;
+        case rating >= 5.0:
+            movieRating.style.backgroundColor = "#dbc714"
+            console.log(2)
+            break;
+        case rating >= 0.0:
+            movieRating.style.backgroundColor = "#db3c14"
+            console.log(3)
+            break;
+        default:
+            movieRating.backgroundColor = "#d113b5"
+    }
     movieOverview.textContent = overview
 }
 

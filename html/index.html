@@ -8,42 +8,48 @@
 </head>
 <body>
 
-<div id="header-title">
-    <h1>Pickaflix</h1>
-    <h3>We pick your flix!</h3>
-</div>
+<div id="background-img">
+    <div id="background-overlay">
 
-<div id="content">
-
-    <div id="filters-panel">
-        <div class="filters-labels">
-            <p>Genres:</p>
+        <div id="header-title">
+            <h1>Pickaflix</h1>
+            <h3>We pick your flix!</h3>
         </div>
-        <div class="filters-options">
-            <ul id="genre-filters-list"></ul>
+
+        <div id="content">
+
+            <div id="filters-panel">
+                <div class="filters-labels">
+                    <p>Genres:</p>
+                </div>
+                <div class="filters-options">
+                    <ul id="genre-filters-list"></ul>
+                </div>
+            </div>
+
+            <div>
+                <a class="custom-btn positive-btn" id="findMovieBtn" onclick="pickMovie()">Find Movie!</a>
+            </div>
+
+            <div id="pick-panel-container">
+                <div id="pick-panel">
+                    <img id="poster-img" src="" alt="">
+                    <div id="title-div">
+                        <p id="movie-title"></p>
+                        <p id="movie-year" class="title-details"></p>
+                        <p id="movie-genre" class="title-details"></p>
+                        <p id="movie-language" class="title-details"></p>
+                    </div>
+                    <div id="overview-div">
+                        <p id="overview"></p>
+                    </div>
+                    <div id="options-div">
+                        <p id="movie-rating"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div>
-        <a class="custom-btn positive-btn" id="findMovieBtn" onclick="pickMovie()">Find Movie!</a>
-    </div>
-
-
-    <div id="pick-panel">
-        <img id="poster-img" src="" alt="">
-        <div id="title-div">
-            <p id="movie-title"></p>
-            <p id="movie-year" class="title-details"></p>
-            <p id="movie-genre" class="title-details"></p>
-            <p id="movie-language" class="title-details"></p>
-        </div>
-        <div id="overview-div">
-            <p id="overview"></p>
-        </div>
-        <div id="options-div">
-            <p id="movie-rating"></p>
-        </div>
-</div>
 </div>
 <script src="../js/apitest.js"></script>
 </body>

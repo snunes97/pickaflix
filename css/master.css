@@ -10,8 +10,20 @@ body {
   font-weight: 500;
 }
 
+#background-img {
+  background-image: url("../imgs/back.jpg");
+  background-size: contain;
+}
+
+#background-overlay {
+  background-color: rgba(71, 170, 245, 0.6);
+}
+
 #header-title {
-  margin: 40px 70px;
+  padding: 40px 70px;
+}
+#header-title h1, #header-title h3 {
+  margin: 0;
 }
 
 #filters-panel {
@@ -38,6 +50,10 @@ body {
   text-decoration: none;
 }
 
+#pick-panel-container {
+  padding-bottom: 150px;
+}
+
 #pick-panel {
   display: grid;
   grid-template-columns: 455px auto;
@@ -45,9 +61,8 @@ body {
   box-shadow: 5px 5px 10px #000000;
   width: 65vw;
   height: 685px;
-  margin: auto;
+  margin: 0 auto;
   background-color: #6e6e6e;
-  margin-bottom: 50px;
 }
 
 #poster-img {

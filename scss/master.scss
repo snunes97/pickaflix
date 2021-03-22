@@ -14,8 +14,20 @@ body{
 $imageHeight: 685px;
 $imageWidth: 455px;
 
+#background-img{
+    background-image: url("../imgs/back.jpg");
+    background-size: contain;
+}
+
+#background-overlay{
+    background-color: rgba(71, 170, 245,0.6);
+}
+
 #header-title{
-    margin: 40px 70px;
+    padding: 40px 70px;
+    h1,h3{
+        margin: 0;
+    }
 }
 
 #filters-panel{
@@ -42,6 +54,10 @@ $imageWidth: 455px;
     }
 }
 
+#pick-panel-container{
+    padding-bottom: 150px;
+}
+
 #pick-panel{
     display: grid;
     grid-template-columns: $imageWidth auto;
@@ -49,9 +65,8 @@ $imageWidth: 455px;
     box-shadow: 5px 5px 10px #000000;
     width: 65vw;
     height: $imageHeight;
-    margin: auto;
+    margin: 0 auto;
     background-color: #6e6e6e;
-    margin-bottom: 50px;
 }
 
 #poster-img{
