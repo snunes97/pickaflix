@@ -48,32 +48,57 @@ async function setMovieElements(title,year,genre,overview,posterUrl,lang,rating,
     let movieRating = document.getElementById('movie-rating')
     let movieOverview = document.getElementById('overview')
 
+    let vposterImg = document.getElementById('vert-poster-img')
+    let vmovieTitle = document.getElementById('vert-movie-title')
+    let vmovieYear = document.getElementById('vert-movie-year')
+    let vmovieGenre = document.getElementById('vert-movie-genre')
+    let vmovieLanguage = document.getElementById('vert-movie-language')
+    let vmovieRating = document.getElementById('vert-movie-rating')
+    let vmovieOverview = document.getElementById('vert-overview')
+
     posterImg.src = imageBaseUrl + imageSizeW500 + posterUrl
+    vposterImg.src = imageBaseUrl + imageSizeW500 + posterUrl
+
+    var lang = "Language: " + lang.toUpperCase()
+    var rat = "Avg. Rating: " + rating + " (" + votes + " votes)"
 
     movieTitle.textContent = title
     movieYear.textContent = year
     movieGenre.textContent = genre
-    movieLanguage.textContent = "Language: " + lang.toUpperCase()
+    movieLanguage.textContent = lang
 
-    movieRating.textContent = "Avg. Rating: " + rating + " (" + votes + " votes)"
+    vmovieTitle.textContent = title
+    vmovieYear.textContent = year
+    vmovieGenre.textContent = genre
+    vmovieLanguage.textContent = lang
+
+    movieRating.textContent = rat
+    vmovieRating.textContent = rat
+
+    var green = "#11d618"
+    var yellow = "#dbc714"
+    var red = "#db3c14"
+    var other = "#d113b5"
 
     switch(true) {
         case rating >= 7.0:
-            movieRating.style.backgroundColor = "#11d618"
-            console.log(1)
+            movieRating.style.backgroundColor = green
+            vmovieRating.style.backgroundColor = green
             break;
         case rating >= 5.0:
-            movieRating.style.backgroundColor = "#dbc714"
-            console.log(2)
+            movieRating.style.backgroundColor = yellow
+            vmovieRating.style.backgroundColor = yellow
             break;
         case rating >= 0.0:
-            movieRating.style.backgroundColor = "#db3c14"
-            console.log(3)
+            movieRating.style.backgroundColor = red
+            vmovieRating.style.backgroundColor = red
             break;
         default:
-            movieRating.backgroundColor = "#d113b5"
+            movieRating.backgroundColor = other
+            vmovieRating.backgroundColor = other
     }
     movieOverview.textContent = overview
+    vmovieOverview.textContent = overview
 }
 
 async function pickMovie(){
